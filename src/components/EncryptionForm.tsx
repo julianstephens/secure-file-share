@@ -33,7 +33,7 @@ export const EncryptionForm = () => {
 
   const insertKV = () => {
     const prev = getValues("kvPairs");
-    if (!prev) return;
+    if (!prev || prev.length >= 10) return;
     setValue("kvPairs", [...prev, { key: "", value: "" }]);
   };
 

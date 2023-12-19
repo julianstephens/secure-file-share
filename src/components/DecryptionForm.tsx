@@ -30,7 +30,7 @@ export const DecryptionForm = () => {
   };
 
   const getData = async (code: string) => {
-    const { data } = await ctx.secrets.retrieve.fetch({ link: code });
+    const { data } = await ctx.secrets.retrieve.fetch({ code });
     if (data?.content) success.updateData(JSON.stringify(data.content));
   };
 

@@ -1,7 +1,7 @@
 import { DecryptionForm } from "@/components/DecryptionForm";
 import { EncryptionForm } from "@/components/EncryptionForm";
 import { useSuccess } from "@/components/SuccessContext";
-import { Layout } from "@/utils/layout";
+import { Layout } from "@/components/Layout";
 import { Loader } from "@/utils/loader";
 import dayjs from "dayjs";
 import LocalizedFormat from "dayjs/plugin/localizedFormat";
