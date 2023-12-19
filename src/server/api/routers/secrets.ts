@@ -15,25 +15,25 @@ export const secretsRouter = createTRPCRouter({
         });
       }
 
-      const { link, expiresAt } = await ctx.db.secret.create({
+      const { code, expiresAt } = await ctx.db.secret.create({
         data: {
           content: encryptedData,
           expiresAt: input.expiration,
-          link: Vault.uuid(),
+          code: Vault.uuid(),
         },
         select: {
-          link: true,
+          code: true,
           expiresAt: true,
         },
       });
-      return { data: { link, expiresAt } };
+      return { data: { code, expiresAt } };
     }),
   retrieve: protectedProcedure
     .input(RetrieveSchema)
-    .query(async ({ input: { link }, ctx }) => {
+    .query(async ({ input: { code }, ctx }) => {
       const data = await ctx.db.secret.findUnique({
         where: {
-          link,
+          code,
         },
         select: {
           content: true,

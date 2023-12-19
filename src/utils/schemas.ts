@@ -6,5 +6,5 @@ export const CommitSchema = z.object({
 });
 
 export const RetrieveSchema = z.object({
-  link: z.string(),
+  code: z.string(),
 });

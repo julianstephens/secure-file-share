@@ -59,7 +59,7 @@ export const DecryptionForm = () => {
               http://localhost:3000?secret_code=
             </span>
             <input
-              name="link"
+              name="code"
               type="text"
               className="my-0 w-full bg-transparent py-0 text-center text-purple-500"
               value={passcode}

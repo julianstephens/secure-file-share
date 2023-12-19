@@ -102,7 +102,7 @@ export const EncryptionForm = () => {
 
     try {
       const {
-        data: { link, expiresAt },
+        data: { code, expiresAt },
       } = await commitMutation.mutateAsync({
         contents:
           typeof contents === "string" ? contents.trim() : Array.from(contents),
@@ -111,8 +111,8 @@ export const EncryptionForm = () => {
           .toISOString(),
       });
 
-      success.updatePassword(link);
-      toast.success(link);
+      success.updatePassword(code);
+      toast.success(code);
       success.updateExpiration(dayjs(expiresAt).format("LLLL"));
       success.updateStatus("READY");
     } catch (err: unknown) {

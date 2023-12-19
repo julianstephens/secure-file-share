@@ -14,7 +14,7 @@ datasource db {
 model Secret {
   id        String   @id @default(cuid())
   content   Bytes
-  link      String   @unique
+  code      String   @unique @map("code")
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
   expiresAt DateTime @map("expires_at")
