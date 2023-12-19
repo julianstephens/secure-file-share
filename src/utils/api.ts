@@ -41,7 +41,7 @@ export const api = createTRPCNext<AppRouter>({
         }),
         httpBatchLink({
           url: `${getBaseUrl()}/api/trpc`,
-          async headers() {
+          headers() {
             return {
               authorization: env.NEXT_PUBLIC_API_KEY,
             };

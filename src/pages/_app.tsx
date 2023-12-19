@@ -1,3 +1,4 @@
+import { SuccessProvider } from "@/components/SuccessContext";
 import "@/styles/globals.css";
 import { api } from "@/utils/api";
 import { type AppType } from "next/app";
@@ -7,8 +8,10 @@ import "react-toastify/dist/ReactToastify.css";
 const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <>
-      <Component {...pageProps} />
-      <ToastContainer />
+      <SuccessProvider>
+        <Component {...pageProps} />
+      </SuccessProvider>
+      <ToastContainer closeOnClick={false} />
     </>
   );
 };

@@ -7,9 +7,17 @@ export const secretsRouter = createTRPCRouter({
   commit: protectedProcedure
     .input(CommitSchema)
     .mutation(async ({ input, ctx }) => {
+      const encryptedData = vault.encrypt(input.contents);
+      if (!encryptedData) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "unable to encrypt data",
+        });
+      }
+
       const { link, expiresAt } = await ctx.db.secret.create({
         data: {
-          content: Buffer.from(vault.encrypt(input.contents)),
+          content: encryptedData,
           expiresAt: input.expiration,
           link: Vault.uuid(),
         },
@@ -31,12 +39,13 @@ export const secretsRouter = createTRPCRouter({
           content: true,
         },
       });
-      debugger;
       if (!data) throw new TRPCError({ code: "NOT_FOUND" });
+
+      const decrypted = vault.decrypt(data.content);
 
       return {
         data: {
-          content: vault.decrypt(data.content),
+          content: decrypted,
         },
       };
     }),

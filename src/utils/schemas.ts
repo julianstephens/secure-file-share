@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const CommitSchema = z.object({
-  contents: z.string(),
+  contents: z.string().or(z.number().array()),
   expiration: z.string().datetime(),
 });
 

@@ -7,6 +7,9 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
+    DB_USER: z.string(),
+    DB_NAME: z.string(),
+    DB_PASS: z.string(),
     DATABASE_URL: z.string().url(),
     NEXT_PUBLIC_API_KEY: z.string(),
     HASH_KEY: z.string(),
@@ -28,6 +31,9 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
+    DB_USER: process.env.DB_USER,
+    DB_NAME: process.env.DB_NAME,
+    DB_PASS: process.env.DB_PASS,
     DATABASE_URL: process.env.DATABASE_URL,
     HASH_KEY: process.env.HASH_KEY,
     NODE_ENV: process.env.NODE_ENV,
