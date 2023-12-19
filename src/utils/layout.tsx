@@ -1,3 +1,4 @@
+import { karla } from "@/styles/fonts";
 import Head from "next/head";
 
 export const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -7,7 +8,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
         <title>Secure file Sharing</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-b from-[#2e026d] to-[#15162c]">
+      <main className={`${karla.className} h-full w-full text-[#030303]`}>
         {children}
       </main>
     </>

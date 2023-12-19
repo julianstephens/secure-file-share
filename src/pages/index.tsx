@@ -1,3 +1,4 @@
+import { DecryptionForm } from "@/components/DecryptionForm";
 import { EncryptionForm } from "@/components/EncryptionForm";
 import { Layout } from "@/utils/layout";
 import { Loader } from "@/utils/loader";
@@ -10,5 +11,16 @@ dayjs.extend(LocalizedFormat);
 export default function Home() {
   const [isLoading] = useState(false);
 
-  return <Layout>{isLoading ? <Loader /> : <EncryptionForm />}</Layout>;
+  return (
+    <Layout>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <DecryptionForm />
+          <EncryptionForm />
+        </>
+      )}
+    </Layout>
+  );
 }

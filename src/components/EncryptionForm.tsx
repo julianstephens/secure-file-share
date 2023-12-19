@@ -120,94 +120,101 @@ export const EncryptionForm = () => {
     }
     reset();
   };
+
   return (
-    <form className="w-4/5" onSubmit={handleSubmit(onSubmit)}>
-      <div className="mt-20 flex flex-col gap-4">
-        <h3>Expires In</h3>
-        <AppSelect
-          options={dateOpts}
-          id="expiresSelector"
-          handler={handleDateSelect}
-        />
-      </div>
-      <div className="mt-20 flex flex-col gap-4">
-        <h3>Upload file</h3>
-        <input
-          type="file"
-          multiple={false}
-          accept={ACCEPTED_FILE_TYPES}
-          {...register("files")}
-        />
-      </div>
-      <h2 className="my-10 text-center">OR</h2>
-      <div className="flex flex-col gap-4">
-        <h3>Add secret(s)</h3>
-        <label>
-          Secret Type
-          <AppSelect
-            id="typeSelector"
-            options={secretTypes}
-            handler={handleTypeSelect}
-          />
-        </label>
-        {typeSelection ? (
-          typeSelection?.label === TYPES.KV ? (
-            <>
-              <div className="flex w-full flex-col gap-4">
-                {watch("kvPairs")?.map((_, idx) => (
-                  <div
-                    className="flex w-full items-center justify-center gap-3"
-                    key={idx}
-                  >
-                    <label className="w-2/4">
-                      Key
-                      <input type="text" {...register(`kvPairs.${idx}.key`)} />
-                    </label>
-                    <label className="w-2/4">
-                      Value
-                      <input
-                        {...register(`kvPairs.${idx}.value`)}
-                        type="text"
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      className="ml-2 mt-6 h-fit w-fit text-xl hover:text-red-500"
-                      onClick={() => removeKV(idx)}
-                    >
-                      x
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="flex w-full justify-center">
-                <button
-                  className="ml-auto mt-6 text-lg transition-all duration-200 hover:font-bold"
-                  type="button"
-                  onClick={insertKV}
-                >
-                  &#43; Add key/value pair
-                </button>
-              </div>
-            </>
-          ) : (
-            <textarea
-              rows={10}
-              className="min-w-full p-3"
-              placeholder="Your super secret text..."
-              {...register("text")}
-            />
-          )
-        ) : (
-          <></>
-        )}
-      </div>
-      <button
-        className="mx-auto mt-12 flex items-center justify-center rounded-md bg-white px-10 py-2 text-[#2e026d] transition-all duration-200 hover:font-bold hover:shadow-md hover:shadow-white"
-        type="submit"
+    <>
+      <h1 className="mt-6 text-center">Encrypt a message</h1>
+      <form
+        className="h-full w-full overflow-y-scroll px-11"
+        onSubmit={handleSubmit(onSubmit)}
       >
-        Generate Shareable Link
-      </button>
-    </form>
+        <div className="mt-20 flex flex-col gap-4">
+          <h3>Expires In</h3>
+          <AppSelect
+            options={dateOpts}
+            id="expiresSelector"
+            handler={handleDateSelect}
+          />
+        </div>
+        <div className="mt-20 flex flex-col gap-4">
+          <h3>Upload file</h3>
+          <input
+            type="file"
+            multiple={false}
+            accept={ACCEPTED_FILE_TYPES}
+            {...register("files")}
+          />
+        </div>
+        <h2 className="my-10 text-center">OR</h2>
+        <div className="flex flex-col gap-4">
+          <h3>Add secret(s)</h3>
+          <label>
+            Secret Type
+            <AppSelect
+              id="typeSelector"
+              options={secretTypes}
+              handler={handleTypeSelect}
+            />
+          </label>
+          {typeSelection ? (
+            typeSelection?.label === TYPES.KV ? (
+              <>
+                <div className="flex w-full flex-col gap-4">
+                  {watch("kvPairs")?.map((_, idx) => (
+                    <div
+                      className="flex w-full items-center justify-center gap-3"
+                      key={idx}
+                    >
+                      <label className="w-2/4">
+                        Key
+                        <input
+                          type="text"
+                          {...register(`kvPairs.${idx}.key`)}
+                        />
+                      </label>
+                      <label className="w-2/4">
+                        Value
+                        <input
+                          {...register(`kvPairs.${idx}.value`)}
+                          type="text"
+                        />
+                      </label>
+                      <button
+                        type="button"
+                        className="ml-2 mt-6 h-fit w-fit text-xl hover:text-red-500"
+                        onClick={() => removeKV(idx)}
+                      >
+                        x
+                      </button>
+                    </div>
+                  ))}
+                </div>
+                <div className="flex w-full justify-center">
+                  <button
+                    className="ml-auto mt-6 text-lg transition-all duration-200 hover:font-bold"
+                    type="button"
+                    onClick={insertKV}
+                  >
+                    &#43; Add key/value pair
+                  </button>
+                </div>
+              </>
+            ) : (
+              <textarea
+                rows={10}
+                className="min-w-full p-3"
+                placeholder="Your super secret text..."
+                {...register("text")}
+              />
+            )
+          ) : (
+            <></>
+          )}
+        </div>
+        <button className="button mx-auto mt-12 block" type="submit">
+          Generate Shareable Link
+        </button>
+      </form>
+    </>
   );
 };
