@@ -5,18 +5,16 @@ import { toast } from "react-toastify";
 import { useSuccess } from "./SuccessContext";
 
 export const DecryptionForm = () => {
+  const [placeholder] = useState("enter your secret code here");
   const [isLoading, setLoading] = useState(false);
-  const [passcode, setPasscode] = useState("enter your secret code here");
-  const [decrypted, setDecrypted] = useState<
-    string | Record<string, string | number | boolean> | null
-  >(null);
+  const [passcode, setPasscode] = useState(placeholder);
   const success = useSuccess();
   const ctx = api.useContext();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setLoading(true);
-    if (passcode === "enter your secret code here") {
+    if (passcode === placeholder) {
       toast.error("no passphrase provided");
       setLoading(false);
       return;
@@ -33,19 +31,19 @@ export const DecryptionForm = () => {
 
   const getData = async (code: string) => {
     const { data } = await ctx.secrets.retrieve.fetch({ link: code });
-    if (data?.content) setDecrypted(data.content);
+    if (data?.content) success.updateData(JSON.stringify(data.content));
   };
 
-  const updatePasscode = (code: string) => {
-    setPasscode(code);
+  const updatePasscode = (code: string | null) => {
+    setPasscode(code || placeholder);
   };
 
   useEffect(() => {
-    if (success.password) updatePasscode(success.password);
+    updatePasscode(success.password);
   }, [success.password]);
 
   return (
-    <div className="flex h-[20rem] w-full flex-col items-center justify-between bg-gray-100 py-20">
+    <div className="mb-6 flex h-[20rem] w-full flex-col items-center justify-between bg-gray-100 py-20">
       <h1>Decrypt Message</h1>
       {isLoading ? (
         <Loader />
@@ -57,7 +55,9 @@ export const DecryptionForm = () => {
           }}
         >
           <label className="flex h-10 w-full flex-row items-center rounded-md bg-zinc-800 px-4 text-xl font-bold text-white">
-            <span className="w-fit shrink-0">http://localhost:3000/open/</span>
+            <span className="w-fit shrink-0">
+              http://localhost:3000?secret_code=
+            </span>
             <input
               name="link"
               type="text"

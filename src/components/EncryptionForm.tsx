@@ -123,7 +123,7 @@ export const EncryptionForm = () => {
 
   return (
     <>
-      <h1 className="mt-6 text-center">Encrypt a message</h1>
+      <h1 className="text-center">Encrypt a message</h1>
       <form
         className="h-full w-full overflow-y-scroll px-11"
         onSubmit={handleSubmit(onSubmit)}
@@ -212,7 +212,7 @@ export const EncryptionForm = () => {
           )}
         </div>
         <button className="button mx-auto mt-12 block" type="submit">
-          Generate Shareable Link
+          Generate Shareable Code
         </button>
       </form>
     </>

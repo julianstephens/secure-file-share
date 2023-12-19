@@ -5,10 +5,13 @@ type Status = "PENDING" | "READY";
 type SuccessContext = {
   password: string | null;
   expiration: string | null;
+  data: string | null;
   status: Status;
   updatePassword: (password: string) => void;
   updateExpiration: (expiration: string) => void;
+  updateData: (data: string) => void;
   updateStatus: (status: Status) => void;
+  clear: VoidFunction;
 };
 
 const context = createContext<SuccessContext>({} as SuccessContext);
@@ -20,6 +23,7 @@ export const SuccessProvider = ({
 }) => {
   const [password, setPassword] = useState<string | null>(null);
   const [expiration, setExpiration] = useState<string | null>(null);
+  const [data, setData] = useState<string | null>(null);
   const [status, setStatus] = useState<Status>("PENDING");
 
   const updatePassword = (newPassword: string) => {
@@ -30,8 +34,19 @@ export const SuccessProvider = ({
     setExpiration(newExpiration);
   };
 
+  const updateData = (newData: string) => {
+    setData(newData);
+  };
+
   const updateStatus = (newStatus: Status) => {
     setStatus(newStatus);
+  };
+
+  const clear = () => {
+    setPassword(null);
+    setExpiration(null);
+    setData(null);
+    setStatus("PENDING");
   };
 
   return (
@@ -39,10 +54,13 @@ export const SuccessProvider = ({
       value={{
         password,
         expiration,
+        data,
         status,
         updatePassword,
         updateExpiration,
+        updateData,
         updateStatus,
+        clear,
       }}
     >
       {children}
@@ -53,18 +71,24 @@ export const useSuccess = () => {
   const {
     password,
     expiration,
+    data,
     status,
     updatePassword,
     updateExpiration,
+    updateData,
     updateStatus,
+    clear,
   } = useContext(context);
 
   return {
     password,
     expiration,
+    data,
     status,
     updatePassword,
     updateExpiration,
+    updateData,
     updateStatus,
+    clear,
   };
 };
